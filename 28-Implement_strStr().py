@@ -6,11 +6,6 @@ class Solution(object):
         :rtype: int
         """
         
-        """
-        Input:
-        haystack = "mississippi"
-        needle = "issip"
-        """
         len_h = len(haystack)
         len_n = len(needle)
         
@@ -20,14 +15,14 @@ class Solution(object):
             return 0
         
         index = 0
-        found = True
         for i in range(len_h):
+            found = True
             if haystack[i] == needle[0]:
                 k = 0
                 for j in range(i, i + len_n):
-                    if haystack[j] != needle[k]:    # Line 23: IndexError: string index out of range
+                    if j == len_h or haystack[j] != needle[k]:
                         found = False
-                        break;
+                        break
                     k = k + 1
                 
                 if found == True:
