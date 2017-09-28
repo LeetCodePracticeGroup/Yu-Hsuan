@@ -16,17 +16,10 @@ class Solution(object):
         
         index = 0
         for i in range(len_h):
-            found = True
             if haystack[i] == needle[0]:
-                k = 0
-                for j in range(i, i + len_n):
-                    if j == len_h or haystack[j] != needle[k]:
-                        found = False
-                        break
-                    k = k + 1
-                
-                if found == True:
+                if haystack[i:i+len_n] == needle:
                     index = i
                     break
+
                     
         return index
