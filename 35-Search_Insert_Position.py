@@ -6,11 +6,18 @@ class Solution(object):
         :rtype: int
         """
         
-        index = 0
-        for i, num in enumerate(nums):
-            if num >= target:
-                index = i
-                return i
-        
-        if index == 0:
-            return len(nums)
+        l = 0
+        r = len(nums) - 1
+
+        # binary search
+        while l <= r:
+            middle = (l+r) / 2
+
+            if nums[middle] > target:
+                r = middle - 1
+            elif nums[middle] < target:
+                l = middle + 1
+            else:
+                return middle
+
+        return l
