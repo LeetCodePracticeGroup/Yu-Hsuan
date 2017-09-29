@@ -4,32 +4,36 @@ class Solution(object):
         :type edges: List[List[int]]
         :rtype: List[int]
         """
-        
-        node_num = len(edges)
-        
-        # initialize
-        my_set = [0]
-        for i in range(node_num):
-            my_set.append(i+1)
-        
+        my_dict = dict()    # use to store the root
+
+        def findRoot(node):
+            # 如果不是自己一組，看是跟誰一組
+            while node != my_dict[node]:
+                node = my_dict[node]
+
+            return node
+
+
         for edge in edges:
             node1 = edge[0]
             node2 = edge[1]
             
-            # check if thw two noeds belong to the same group
-            if my_set[node1] == my_set[node2]:
-                return edge
-            
-            # union
+            if node1 not in my_dict:
+                my_dict[node1] = node1
+            if node2 not in my_dict:
+                my_dict[node2] = node1  # set its root to node1
+
             else:
-                group1 = my_set[node1]
-                group2 = my_set[node2]
+                root1 = findRoot(node1)
+                root2 = findRoot(node2)
+
+                # check if the two nodes belong to the same root
+                if root1 == root2:
+                    return edge
                 
-                if group1 > group2:
-                    for i in range(1,node_num+1):
-                        if my_set[i] == group1:
-                            my_set[i] = group2
+                # union
                 else:
-                    for i in range(1,node_num+1):
-                        if my_set[i] == group2:
-                            my_set[i] = group1                               
+                    if root1 > root2:
+                        my_dict[root1] = my_dict[root2]
+                    else:
+                        my_dict[root2] = my_dict[root1]
